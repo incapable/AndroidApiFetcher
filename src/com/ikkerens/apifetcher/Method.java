@@ -27,7 +27,7 @@ public enum Method {
     }
 
     HttpUriRequest prepare( URI uri ) throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-        return (HttpUriRequest) clazz.getConstructor( URI.class ).newInstance( uri );
+        return (HttpUriRequest) clazz.getSuperclass().getConstructor( URI.class ).newInstance( uri );
     }
 
     String getHeader() throws InstantiationException, IllegalAccessException {
