@@ -163,7 +163,7 @@ public class ApiRequest {
                 if ( request instanceof HttpEntityEnclosingRequestBase && ApiRequest.this.arguments.containsKey( method ) )
                     ( (HttpEntityEnclosingRequestBase) request ).setEntity( method.getBody( arguments.get( method ) ) );
 
-                if ( ApiRequest.this.signature != null )
+                if ( signature != null )
                     signature.sign( request );
 
                 httpClient = new DefaultHttpClient();
