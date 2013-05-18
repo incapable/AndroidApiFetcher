@@ -12,13 +12,15 @@ import com.ikkerens.apifetcher.methods.Get;
 import com.ikkerens.apifetcher.methods.JsonPost;
 import com.ikkerens.apifetcher.methods.JsonPut;
 import com.ikkerens.apifetcher.methods.Post;
+import com.ikkerens.apifetcher.methods.Put;
 
 public enum Method {
     GET ( Get.class ),
     POST ( Post.class ),
+    PUT ( Put.class ),
+    DELETE ( Delete.class ),
     JSON_POST ( JsonPost.class ),
-    JSON_PUT ( JsonPut.class ),
-    DELETE ( Delete.class );
+    JSON_PUT ( JsonPut.class );
 
     private Class< ? extends ApiMethod > clazz;
 
