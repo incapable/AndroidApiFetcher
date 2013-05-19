@@ -6,6 +6,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 
 import oauth.signpost.OAuthConsumer;
@@ -23,6 +24,7 @@ public class ApiRequest {
     private String                              url;
     private OAuthConsumer                       signature;
     private Map< Method, Map< String, Object >> arguments;
+    private Map< String, String >               headers;
     private FetchResult                         resultHandler;
     private Method                              method;
 
@@ -37,9 +39,21 @@ public class ApiRequest {
     public ApiRequest( String url, Method method ) {
         this.url = url;
         this.arguments = new HashMap< Method, Map< String, Object > >();
+        this.headers = new HashMap<String, String>();
         this.method = method;
     }
-
+    
+    /**
+     * Puts a new header
+     * @param key 
+     *          The header identification
+     * @param value
+     *          The string value
+     */
+    public void putHeader(String key, String value) {
+        this.headers.put( key, value );
+    }
+    
     /**
      * Puts a new string argument
      * 
@@ -159,6 +173,10 @@ public class ApiRequest {
                 String header = ApiRequest.this.method.getHeader();
                 if ( header != null )
                     request.setHeader( "Content-Type", header );
+                
+                for(Entry<String,String> entry : ApiRequest.this.headers.entrySet()) {
+                    request.setHeader( entry.getKey(), entry.getValue() );
+                }
 
                 if ( request instanceof HttpEntityEnclosingRequestBase && ApiRequest.this.arguments.containsKey( method ) )
                     ( (HttpEntityEnclosingRequestBase) request ).setEntity( method.getBody( arguments.get( method ) ) );
